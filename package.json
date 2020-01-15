@@ -1,0 +1,24 @@
+{
+  "name": "n11",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "watch": "tsc -w",
+    "dev": "nodemon dist/src/main"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/bluebird": "^3.5.29",
+    "@types/dotenv": "^8.2.0",
+    "@types/node": "^13.1.6",
+    "@types/soap": "^0.21.0",
+    "typescript": "^3.7.4"
+  },
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "soap": "^0.30.0"
+  }
+}
