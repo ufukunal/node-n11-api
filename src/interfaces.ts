@@ -7,16 +7,43 @@ export type Auth = {
   appSecret: string;
 };
 
-export type City = {
+export type PagingData = {
+  currentPage: number;
+  pageSize: number;
+};
+
+export interface City {
   cityCode: string; // Number
   cityId: string; // Number
   cityName: string;
-};
+}
 
-export interface CityResult {
-  result: Result;
+export interface District {
+  id: string; // number
+  name: string;
+}
 
-  cities?: {
-    city: City[];
-  };
+export interface Neighborhood {
+  id: string; // number
+  name: string;
+}
+
+export interface Category {
+  id: string; // number
+  name: string;
+}
+
+export interface CategoryAttribute {
+  id: string; // number
+  mandatory: string;
+  multipleSelect: string;
+  name: string;
+  priority: string;
+  valueList: [
+    {
+      value: string;
+      id: string;
+      name: string;
+    }
+  ];
 }
