@@ -19,9 +19,9 @@ config();
 
 (async () => {
   const service = new CategoryService({
-    appKey: process.env.APP_KEY,
-    appSecret: process.env.APP_SECRET
+    appKey: process.env.APP_KEY as string,
+    appSecret: process.env.APP_SECRET as string
   });
-  const data = await service.GetSubCategories(1002720);
+  const data = await service.GetParentCategory(1002720);
   console.log(data);
 })();

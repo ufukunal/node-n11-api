@@ -12,6 +12,17 @@ export type PagingData = {
   pageSize: number;
 };
 
+export type ErrorType = {
+  errorCode: string;
+  errorMessage: string;
+  errorCategory: string;
+};
+
+export enum ResponseStatus {
+  FAILURE = "failure",
+  SUCCESS = "success"
+}
+
 export interface City {
   cityCode: string; // Number
   cityId: string; // Number
@@ -47,3 +58,9 @@ export interface CategoryAttribute {
     }
   ];
 }
+
+export const CustomError = {
+  errorCode: "App.ServerError",
+  errorMessage: "Cannot connect to server",
+  errorCategory: "NETWORK_ERROR"
+};

@@ -1,5 +1,13 @@
 import { createClientAsync, Client } from "soap";
-import { Auth, Category } from "interfaces";
+import {
+  Auth,
+  Category,
+  ErrorType,
+  ResponseStatus,
+  CustomError,
+  PagingData,
+  CategoryAttribute
+} from "../interfaces";
 
 export class CategoryService {
   private serviceUrl: string = "https://api.n11.com/ws/CategoryService.wsdl";
@@ -26,39 +34,84 @@ export class CategoryService {
   }
   */
 
-  async GetTopLevelCategories(): Promise<Category[]> {
+  async GetTopLevelCategories(): Promise<Category[] | ErrorType> {
     let args = {
       auth: this.auth
     };
-    const client: Client = await createClientAsync(this.serviceUrl);
-    const response = await client.GetTopLevelCategoriesAsync(args);
-    const data: Category[] = response[0].categoryList;
-    return data;
+
+    try {
+      const client: Client = await createClientAsync(this.serviceUrl);
+      const response = await client.GetTopLevelCategoriesAsync(args);
+      const { result } = response[0].categoryList;
+      if (result.status === ResponseStatus.FAILURE) {
+        return result; // TODO
+      }
+      return result; // TODO
+    } catch (err) {
+      return CustomError;
+    }
   }
 
-  async GetSubCategories(categoryId: number): Promise<Category[]> {
+  async GetSubCategories(categoryId: number): Promise<Category[] | ErrorType> {
     let args = {
       auth: this.auth,
-      categoryId: categoryId
+      categoryId: categoryId.toString()
     };
-    const client: Client = await createClientAsync(this.serviceUrl);
-    const response = await client.GetSubCategoriesAsync(args);
-    const data: Category[] = response[0].subCategoryList;
-    return data;
+
+    try {
+      const client: Client = await createClientAsync(this.serviceUrl);
+      const response = await client.GetSubCategoriesAsync(args);
+      const { result } = response[0].subCategoryList;
+      if (result.status === ResponseStatus.FAILURE) {
+        return result; // TODO
+      }
+      return result; // TODO
+    } catch (err) {
+      return CustomError;
+    }
   }
 
-  async GetParentCategory(categoryId: number) {
+  async GetParentCategory(categoryId: number): Promise<Category[] | ErrorType> {
     let args = {
       auth: this.auth,
-      categoryId: categoryId
+      categoryId: categoryId.toString()
     };
-    const client: Client = await createClientAsync(this.serviceUrl);
-    const response = await client.GetParentCategoryAsync(args);
-    const data: Category[] = response[0].parentCategory;
-    return data;
+
+    try {
+      const client: Client = await createClientAsync(this.serviceUrl);
+      const response = await client.GetParentCategoryAsync(args);
+      const { result } = response[0];
+      if (result.status === ResponseStatus.FAILURE) {
+        return result; // TODO
+      }
+      return result; // TODO
+    } catch (err) {
+      return CustomError;
+    }
   }
 
   async GetCategoryAttributeValue() {}
   async GetCategoryAttributesId() {}
-  async GetCategoryAttributes() {}
+  async GetCategoryAttributes(
+    categoryId: number,
+    pagingData: PagingData
+  ): Promise<CategoryAttribute, ErrorType> {
+    let args = {
+      auth: this.auth,
+      pagingData: pagingData,
+      categoryId: categoryId
+    };
+
+    try {
+      const client: Client = await createClientAsync(this.serviceUrl);
+      const response = await client.GetCategoryAttributesAsync(args);
+      const { result } = response[0];
+      if (result.status === ResponseStatus.FAILURE) {
+        return result; // TODO
+      }
+      return result;
+    } catch (err) {
+      return CustomError;
+    }
+  }
 }
