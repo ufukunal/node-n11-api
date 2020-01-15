@@ -95,7 +95,7 @@ export class CategoryService {
   async GetCategoryAttributes(
     categoryId: number,
     pagingData: PagingData
-  ): Promise<CategoryAttribute, ErrorType> {
+  ): Promise<ErrorType> {
     let args = {
       auth: this.auth,
       pagingData: pagingData,
